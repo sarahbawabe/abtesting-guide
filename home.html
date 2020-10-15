@@ -26,6 +26,7 @@
         color: crimson;
         background-color: #f1f1f1;
         font-size: 105%;
+        border-radius: 10px;
 
         display: block;
         white-space: pre;
@@ -54,6 +55,10 @@
 
       .jumbo-title {
         margin-top: 20px;
+      }
+
+      .code-comment {
+        color: #ADADAD;
       }
 
     </style>
@@ -85,7 +90,7 @@
                 <a class="nav-link ml-3 my-1" href="#item-2-7">For Loops (uses indices)</a>
                 <a class="nav-link ml-3 my-1" href="#item-2-8">Slicing 2D</a>
               </nav>
-              
+
               <a class="nav-link" href="#item-3">Understanding Statistical Tests</a>
               <nav class="nav nav-pills flex-column">
                 <a class="nav-link ml-3 my-1" href="#item-3-1">(Student) T Distribution</a>
@@ -112,30 +117,35 @@
           <div class="jumbotron jumbotron-fluid jumbo-title">
             <div class="container">
               <h1 class="display-4">AB Testing Walkthough Guide</h1>
-              <p class="lead">In this guide, we will create a python script that runs the two statistical tests commonly used in AB Testing - 
+              <p class="lead">In this guide, we will create a python script that runs the two statistical tests commonly used in AB Testing -
                 t-test for difference of means and chi-squared test for homogeneity -  to compare the metrics of the different interfaces.
                 The goal is that once you have gotten your AB Testing data, you will be able to directly run it through the script and interpret the result.</p>
+              <p class="lead"><strong>You can download/fork the stencil python code repo <a target="_blank" href="https://github.com/sarahbawabe/abtesting">here!</a></strong></p>
             </div>
           </div>
 
 
           <div>
-            <h4 id="item-1">Setting Up Python</h4>
+
+            <h4 id="item-1">Setting Up</h4>
+            <p>You are going to be creating your own python script to help you with the calculations
+              you'll need to complete the A/B Testing project.</p>
+            <p><strong>You can download/fork the stencil python code repo <a target="_blank" href="https://github.com/sarahbawabe/abtesting">here!</a></strong></p>
             <p>
               We will run through how to setup python and run some basic programs using variables and mathematical operations.
               If you are familiar with python, you may skip some of the sections below. If not, this section will greatly benefit you.
             </p>
-          
+
             <h5 id="item-1-1">Downloading Python</h5>
             <p>
-              First we must install python3 (if you have not in the past), 
-              You can download it on <a href="https://www.python.org/downloads/" target="_blank">python's website</a>. 
+              First we must install python3 (if you have not in the past),
+              You can download it on <a href="https://www.python.org/downloads/" target="_blank">python's website</a>.
               After installation, you can check if it works by typing in the command into the command line (terminal on mac):
               <code> > python3</code>
               This will open a live python shell. To exit the shell, type the foloowing command and click return.
               <code> > exit()</code>
               <strong>NOTE:</strong> If python3 didn't work, try:
-              <code> > python</code> 
+              <code> > python</code>
               instead.
             </p>
 
@@ -145,38 +155,43 @@
               We assume this may already be on your computer, if it is, you still need to ensure you can code and run python in it.
             </p>
             <p>
-              You can install vscode <a href="https://code.visualstudio.com" target="_blank"> on its website</a>. 
+              You can install vscode <a href="https://code.visualstudio.com" target="_blank"> on its website</a>.
               After installation, you can open it.
             </p>
             <p>
               Next, you must link python3 to the vscode editor.
-              To do this, first make a new file in vscode. Press, in vscode, <kbd>cmd + n</kbd> (mac) or <kbd>control + n</kbd> (windows).
+              To do this, first make a new file in vscode by pressing <kbd>cmd + n</kbd> (mac) or <kbd>control + n</kbd> (windows), or by clicking the New File button.
               It should open a new tab with your blank file. Write:
               <pre><code>print('Hello, World')</code></pre>
               and save it <kbd>cmd + s</kbd> (mac) or <kbd>control + s</kbd> (windows) as abtesting.py
               <br/>
               It will now ask you to install the python extentions. Install them.
+            </p>
+            <p>
               If it asks you to choose a python interpreter, <strong>choose Python 3.8.*</strong>
               The star indicates the last number doesn't matter.
             </p>
             <p>
-              Last, you must run your code. There should be a run button in the top right. Click that.
+              If another popup is asking you about a linter, you can just X off of that popup.
+            </p>
+            <p>
+              Last, you must run your code. There should be a run button [<span style="color:green">&#9655;</span>] in the top right. Click that.
               A terminal will appear in the bottom with your desired output - Hello, World!
             </p>
             <p>
-              If you have any issues, please contact the TAs or refer to the startup full guide. 
-              The full setup guide is on 
+              If you have any issues, please contact the TAs or refer to the startup full guide.
+              The full setup guide is on
               <a href="https://code.visualstudio.com/docs/python/python-tutorial" target="_blank">vscodes's website</a>.
             </p>
-        
+
             <h5 id="item-1-3">Variables and Basic Mathematical Operations</h5>
             <p>
               Unlike our strictly types languages (java, c++), pyhton is dynamically typed, meaning the complier does not require the variable type when declaring it.
               So, to make a variable:
-              <pre><code>hello_world = 'Hello, World!' 
+              <pre><code>hello_world = 'Hello, World!'
 print(hello_world)</code></pre>
-              This will also print: Hello, World!<br/>
-              Notice how python uses the underscore for spaces in names. It is not camelCase nor hypenenated.
+              This should also print <kbd>Hello, World!</kbd> .<br/>
+              Notice how python uses the underscore for spaces in names. It is not camelCase nor hyphenated.
             </p>
 
             <p>
@@ -184,9 +199,9 @@ print(hello_world)</code></pre>
               The mathematical operations are trivial:
               <pre><code>quik_maths = (((20 / 4) * 5) - (2 ** 3)) + 3
 print(quik_maths)</code></pre>
-              This should print 20.0
+              This should print <kbd>20</kbd> .
               <br/>
-              The only operator exclusive to python here is the power operator. 
+              The only operator exclusive to python here is the power operator.
               In many languages, the power function does not have a short hand. In python, it is **
             </p>
 
@@ -194,25 +209,25 @@ print(quik_maths)</code></pre>
               One important math function we will need is round (to the nearest integer).
               <pre><code>x = round(2.3432)
 print(x)</code></pre>
-              This should print 2
-              <br/>
-              This will be important for the df calculation.
+              This should print <kbd>20</kbd> .
+              <br>
+              This will be important for the degrees of freedom (df) calculation later!
             </p>
 
             <h5 id="item-1-4">Creating Functions and Conditionals</h5>
             <p>
-              I just want to familiarize yourself with the syntax of making a function using. Let's say I wanted to make a function that 
+              I just want to familiarize yourself with the syntax of making a function using. Let's say I wanted to make a function that
               returns a greeting. It takes in the name of the person to be greeted. I would do it by the following.
             </p>
             <p>
-              <pre><code>def generate_greeting(name): 
+              <pre><code>def generate_greeting(name):
     return 'hi, ' + name
 print(generate_greeting('joe'))</code></pre>
-              This will print: hi, joe
+              This should print <kbd>hi, joe</kbd> .
             </p>
             <p>
               Notice how we use def in python. Also, how the body is indented. There are no brackets, only a colon with an indentation.
-              <br/>
+              <br>
               The syntax is very similar to that of conditionals, specifically the if-statement. Below is the syntax for the if-statement.
             </p>
             <p>
@@ -221,10 +236,10 @@ if num &gt; 100:
     print('greater than 100')
 else:
     print('less than or equal to 100')</code></pre>
-              This will print: greater than 100
-              <br/>
-              If num = 99, then it would've printed 'less than or equal to 100'
-              <br/>
+              This should print <kbd>greater than 100</kbd> .
+              <br>
+              If <samp>num = 99</samp>, then it would've printed <kbd>less than or equal to 100</kbd> .
+              <br>
               In python, there is no parathesis around the boolean expression. The body is also indented.
             </p>
 
@@ -235,7 +250,7 @@ else:
             </p>
             <p>
               In terms of lists, below is all we need for this studio.
-              For more methods not mentioned (remove, del, reverse), 
+              For more methods not mentioned (remove, del, reverse),
               <a href="https://www.w3schools.com/python/python_lists.asp" target="_blank">consult this intro guide from W3Schools</a>.
             </p>
 
@@ -247,7 +262,7 @@ else:
 list_empty.append(203)
 list_empty.append('hi')
 print(list_empty)</code></pre>
-              This will print: [203, 'hi'] 
+              This should print <kbd>[203, 'hi']</kbd> .
               <br/>
               Notice how it is acceptable to have different types of elements in this list.
               For this studio, we will use lists only containing numbers.
@@ -258,40 +273,41 @@ print(list_empty)</code></pre>
 print(list_nums)</code></pre>
             </p>
             <p>
-              To append two lists together, you can use extend.
+              To append two lists together, you can use
+              <a href=https://www.geeksforgeeks.org/append-extend-python/ target="_blank">extend</a>.
               <pre><code>list_nums_1 = [204.3, 304.2, 3, -123]
 list_nums_2 = [-1, -304.1, -3]
 list_nums = list_nums_1.extend(list_nums_2)
 print(list_nums)</code></pre>
-              This will give: [204.3, 304.2, 3, -123, -1, -304.1, -3]
+              This should print <kbd>[204.3, 304.2, 3, -123, -1, -304.1, -3]</kbd> .
             </p>
 
             <h5 id="item-2-2">Getting the Length of a List</h5>
             <p>
-              To get the length of a list, we use the len method.
+              To get the length of a list, we use the <samp>len()</samp> method.
               <pre><code>list_nums = [204.3, 304.2, 3, -123]
 list_len = len(list_nums)
 print(list_len)</code></pre>
-              This will print: 4 <br/>
+              This should print <kbd>4</kbd> .<br>
             </p>
 
             <h5 id="item-2-3">Accessing Elements Using Index</h5>
             <p>
               To access a certain element in the list using the index, there is a short hand.
               <pre><code>list_nums = [204.3, 304.2, 3, -123]
-ele_at_index_2 = list_nums[2]
-print(ele_at_index_2)</code></pre>
-              This will print: 3
+elem_at_index_2 = list_nums[2]
+print(elem_at_index_2)</code></pre>
+              This should print <kbd>3</kbd> .
             </p>
             <p>
               There are some really nice ways to access the last element of a list.
               We can also use negatives to access the list backwards.
               However, the last element is -1, not -0.
               <pre><code>list_nums = [204.3, 304.2, 3, -123]
-last_ele = list_nums[-1]
-second_last_ele = list_nums[-2]
-print([last_ele, second_last_ele])</code></pre>
-              This will print: [-123, 3]
+last_elem = list_nums[-1]         <span class="code-comment"># get last element</span>
+second_last_elem = list_nums[-2]  <span class="code-comment"># get second-to-last element</span>
+print([last_elem, second_last_elem])</code></pre>
+              This should print <kbd>[-123, 3]</kbd> .
             </p>
 
             <h5 id="item-2-4">Updating Elements</h5>
@@ -299,71 +315,72 @@ print([last_ele, second_last_ele])</code></pre>
               Similar to the accessing elements, you can update the element using the same index notation.
               <pre><code>list_nums = [204.3, 304.2, 3, -123]
 list_nums[1] = list_nums[1] * -1
-list_nums[2] = list_nums[2] ** 2
+list_nums[2] = list_nums[2] ** 2  <span class="code-comment"># square element at index 2</span>
 print(list_nums)</code></pre>
-              This will print: [204.3, -304.2, 9, -123]
+              This should print <kbd>[204.3, -304.2, 9, -123]</kbd> .
             </p>
 
             <h5 id="item-2-5">Slicing</h5>
             <p>
-              Slicing, or getting sublists, also has a shorthand. It uses the slice operator (:)
-              <br/>
-              list[start:end:skip] with start being the index to start the sublist (inclusive), 
+              Slicing, or getting sublists, also has a shorthand. It uses the slice operator (:),
+              <samp>list[start:end:skip]</samp>, with start being the index to start the sublist (inclusive),
               end being the index to end it (exlusive), and the last number being how many elements to skip in your slice.
-              <br/>
+              <br>
               The skip is optional, and probably will not be used in this studio.
-              <br/>
+              <br>
               If the start or end are blank, it will include the whole list in whichever direction the number wasn't filled out.
             </p>
             <p>
               These examples will make it more clear. Copy and paste them into your python file.
-              <pre><code>list_nums_0 = [204.3, 304.2, 3, -123]
-sub_list_0 = list_nums_0[1:3]
+              <pre><code>list_nums = [0, 1, 2, 3, 4, 5]
+
+<span class="code-comment"># should print [1, 2]</span>
+sub_list_0 = list_nums[1:3]
 print(sub_list_0)
 
-list_nums = [204.3, 304.2, 3, -123, 3012, 67]
+<span class="code-comment"># should print [0, 1, 2, 3]</span>
 sub_list_1 = list_nums[:4]
 print(sub_list_1)
 
-list_nums = [204.3, 304.2, 3, -123, 3012, 67]
+<span class="code-comment"># should print [2, 3, 4, 5]</span>
 sub_list_2 = list_nums[2:]
 print(sub_list_2)
 
-list_nums = [204.3, 304.2, 3, -123, 3012, 67]
+<span class="code-comment"># should print [0, 2, 4]</span>
 sub_list_3 = list_nums[::2]
 print(sub_list_3)
 
-list_nums = [204.3, 304.2, 3, -123, 3012, 67]
+<span class="code-comment"># should print [1, 3]</span>
 sub_list_4 = list_nums[1:5:2]
 print(sub_list_4)</code></pre>
             </p>
 
             <h5 id="item-2-6">For-each Loops</h5>
             <p>
-              The for-each loop is the simplest, and will not allow you to use indices. 
+              The for-each loop is the simplest, and will not allow you to use indices.
               The loop syntax is below:
               <pre><code>list_nums = [204.3, 304.2, 3, -123, 3012, 67]
-for n in list_nums:
-    print(n)</code></pre>
+for num in list_nums:
+    print(num)</code></pre>
               This will print each element of the list on a separate line.
             </p>
             <p>
               Notice how the for-loop structure is very similar to that of a function. It uses the colon with an indented body under it.
-              <br/>
-              The n in the loop is each element which can be used or modified.
+              <br>
+              The <samp>num</samp> in the loop is each element, which can be used or modified.
             </p>
             <p>
               Let's say we wanted to write a function to calculate the sum of the elements in a list.
-              <pre><code>def list_sum(l):
-    l_sum = 0
-    for n in l:
-        l_sum = n + l_sum
+              <pre><code>def list_sum(list):
+    sum = 0
+    for num in list:
+        sum += num <span class="code-comment"># shorthand for sum = sum + num</span>
 
-    return l_sum
+    return sum
 
 list_nums = [204.3, 304.2, 3, -123, 3012, 67]
 print(list_sum(list_nums))</code></pre>
-              This will print the sum.
+              This should print the sum of the list: <kbd>3467.5</kbd> .
             </p>
             <p>
               Notice how the for-loop structure is very similar to that of a functions. It uses the colon with an indented body under it.
@@ -372,7 +389,7 @@ print(list_sum(list_nums))</code></pre>
             <h5 id="item-2-7">For Loops</h5>
             <p>
               The for loop is the similar to the for-each loop, except it uses the range function.
-              The advantage to this type of loop is that we can access the element by the index. 
+              The advantage to this type of loop is that we can access the element by the index.
               The loop syntax is below:
               <pre><code>list_nums = [204.3, 304.2, 3, -123, 3012, 67]
 for n in range(0, len(list_nums)):
@@ -385,56 +402,55 @@ for n in range(0, len(list_nums)):
               So, in essence, it's actually just a for-each loop with an artifical list that holds the indices.
             </p>
             <p>
-              Let's say we wanted to write a function to caclulate the sum of all the elements except the first and the last. 
+              Let's say we wanted to write a function to calculate the sum of all the elements except the first and the last.
               We can restrict the range function.
-              <pre><code>def list_sum(l):
-    l_sum = 0
-    for n in range(1, len(l)-1): 
-        l_sum = l[n] + l_sum
+              <pre><code>def list_sum(list):
+    sum = 0
+    for n in range(1, len(list)-1):
+        sum += list[n] <span class="code-comment"># shorthand for sum = sum + list[n]</span>
 
-    return l_sum
+    return sum
 
 list_nums = [204.3, 304.2, 3, -123, 3012, 67]
 print(list_sum(list_nums))</code></pre>
-              This will print the sum excluding the first and last index. The range(1, len(l)-1) returns [1, 2, ..., len(l)-2]. This can be hard to do with using the for-each loop.
+              This should print the sum excluding the first and last index: <kbd>3196.2</kbd> . The <samp>range(1, len(list)-1)</samp> returns <samp>[1, 2, ..., len(list)-2]</samp>. This can be hard to do with using the for-each loop.
             </p>
 
             <h5 id="item-2-8">Slicing 2D</h5>
             <p>
-              Slicing 2D does not have a shorthand unless we import modules. 
+              Slicing 2D does not have a shorthand unless we import modules.
               Therefore, we must make our own using for loops and the 1D slice operator.
               Algorithmically, this isn't too bad.
             </p>
             <p>
               Let's say we had a 4by4 2D list like so
-              <pre><code>list_2D = [[30, 4, 3, 1], 
-[32, 12, 35, 23],
-[43, 52, -12, 34],
-[34, 341, 340, -214]]</code></pre>
+              <pre><code>list_2D = [[0, 1, 2, 3],
+           [4, 5, 6, 7],
+           [8, 9, 10, 11],
+           [12, 13, 14, 15]]</code></pre>
             </p>
             <p>
-              We want to slice the middle elements, so nothing on the border. The most natural way is to: 1) access the 1D lists using a for loop, 
+              We want to slice the middle elements, so nothing on the border. The most natural way is to: 1) access the 1D lists using a for loop,
               2) slice the sublist with the two middle elements, 3) append the sliced sublists together.
               <br/>
               To abstract this, instead of the two middle elements, we can replace them with the range of indices we want. Also, instead of accessing all 1D lists, we only need to access the ones we want.
             </p>
             <p>
-              Since you love the TAs :), we will implement this 2D slice function for you using the algorithm described above. You may use it as if was a helper you implemented. 
+              Since you love the TAs :), we will implement this 2D slice function for you using the algorithm described above. You may use it as if was a helper you implemented.
               However, you must follow the "contract" of the function: list_2D must be a 2D list, and the indices you are splicing are within the dimensions of the array.
               <pre><code>def slice_2D(list_2D, start_row, end_row, start_col, end_col):
-    to_append = []
-    for l in range(start_row, end_row):
-        to_append.append(list_2D[l][start_col:end_col])
+    new_list = []
+    for i in range(start_row, end_row):
+        new_list.append(list_2D[i][start_col:end_col])
 
-    return to_append
+    return new_list
 
 print(slice_2D(list_2D, 1, 3, 1, 3))
 print(slice_2D(list_2D, 0, len(list_2D), 2, 3))</code></pre>
-              This will return [[12, 35], [52, -12]]
-              then [[3], [35], [-12], [340]]
+              This should print <kbd>[[5, 6], [9, 10]]</kbd> , then <kbd>[[2], [6], [10], [14]]</kbd> .
             </p>
             <p>
-              Notice that when you slice a 2D grid using our implemention, you recieve back a 2D grid, even your column or row indices span width 1.
+              Notice that when you slice a 2D grid using our implemention, you receive back a 2D grid, even your column or row indices span width 1.
             </p>
 
 
@@ -445,7 +461,7 @@ print(slice_2D(list_2D, 0, len(list_2D), 2, 3))</code></pre>
             <h5 id="item-3-1">T distribution</h5>
             <p>
               We will be using the student T distribution (T-dist).
-              To garner a p-value from the T-dist, we need the t-score and the degrees of freedom (df). 
+              To garner a p-value from the T-dist, we need the t-score and the degrees of freedom (df).
             </p>
             <p>
               The image below shows how the degrees of freedom affect the t-distribution.
@@ -455,66 +471,68 @@ print(slice_2D(list_2D, 0, len(list_2D), 2, 3))</code></pre>
             <p>
               The next image simulates the definition of a p-value.
               <img class="img-fluid" src="assets/t-dist-prob.png"/>
-              The one of the red shaded areas represent the area that your t-score encases on the t-distribution (this shows the areas are the same for the t-score even if the sign changes). 
+              The one of the red shaded areas represent the area that your t-score encases on the t-distribution (this shows the areas are the same for the t-score even if the sign changes).
               <br/>
               Therefore, the further away your t-score is from zero, the lower the p-value.
             </p>
             <p>
-              Calculating this area is a complicated integral. 
-              Unfortunately :(, we cannot implement this using basic mathematics. 
+              Calculating this area is a complicated integral.
+              Unfortunately :(, we cannot implement this using basic mathematics.
               Therefore, we must import a python module that can.
             </p>
             <p>
-              To calculate our p-value for our t-test knowing our df and t-score using python, 
+              To calculate our p-value for our t-test knowing our df and t-score using python,
               we will import a python module called "scipy".
               <br/>
               To import this, open a new cmd/terminal and run this command.
               <code> > pip3 install scipy</code>
-              Pip3 was "ghost" installed when you installed python3. If pip3 doesn't work, 
+              Pip3 was "ghost" installed when you installed python3. If pip3 doesn't work,
               try the same command but using pip.
             </p>
-            <p>
-              At the top of your python script add these lines of code. 
+            <p>At the top of your python script add these lines of code.</p>
               <pre><code>from scipy import stats
 from scipy.stats import t as t_dist</code></pre>
-              <strong>Note:</strong> it may require a restart of vscode for the import to apply
+            <p><strong>Note:</strong> if this doesn't work right away, try restarting vscode in order to get the import to apply!
             </p>
             <p>
               As an example (-2 is the t-score and 20 is df),
               <pre><code>print(t_dist.cdf(-2, 20))</code></pre>
-              This will print: .02963, which is concurrent with the second image above.
+              This should print <kbd>.02963</kbd> , which is concurrent with the second image above.
             </p>
             <p>
-              <strong>Note:</strong> it is important for this function that your t-score is negative. The positive t-score will give you .97036 = 1-.02963
-              <br/>
-              There are many ways to avoid a positive t-score. We recommend to check for it before calling t_dist.cdf and change it before use if it is negative.
+              <strong>Note:</strong> it is important for this function that your t-score (-2) is negative.
+              Calling <samp>print(t_dist.cdf(2, 20))</samp> (which has a positive t-score: 2) will give you <kbd>.97036</kbd> , which equals 1 - .02963.
+              This is because <samp>t_dist.cdf()</samp> will return the area under the curve from the left (negative side) over to the given t-score. So, for -2,
+              it goes from the left bound up to -2, whereas a t-score of +2 would yield left bound across the whole curve over to +2.
+              <br><br>
+              There are many ways to avoid a positive t-score. We recommend to check for it before calling <samp>t_dist.cdf()</samp> and change it before use if it is negative.
             </p>
 
             <h5 id="item-3-2">Chi^2 distribution</h5>
             <p>
-              While the t-test is aimed at large sets of 2 samples to be compared, the Chi^2 test is suited for comparing how categories are different. Therefore, it is a completely different distribution.
+              While the t-test is aimed at large sets of 2 samples to be compared, the chi^2 test is suited for comparing how categories are different. Therefore, it is a completely different distribution.
               <img class="img-fluid" src="assets/chi2-dist.jpg"/>
               Is it skewed right but gets more even as df increases.
               As before, we need df to calculate the p-value from this distribution. However, instead of a t-score, this test uses a chi^2 value.
             </p>
             <p>
-              This time, the chi^2 value is stritcly positive (it's a squared value), and the p-value area corresponds to the red shaded reagion in the image below.
+              This time, the chi^2 value is stritcly positive (it's a squared value), and the p-value area corresponds to the red shaded region in the image below.
               <img class="img-fluid" src="assets/chi2-dist-prob.png"/>
             </p>
             <p>
               Scipy also has the function to find the p-value if we know the chi^2 value and the df.
               Add this import under the other imports.
               <pre><code>from scipy.stats import chi2</code></pre>
-              To get the area from 0 to the chi^2 value (23.6 is the chi^2 value, 12 is the df), 
+              To get the area from 0 to the chi^2 value (23.6 is the chi^2 value, 12 is the df),
               <pre><code>print(chi2.cdf(23.6, 12))</code></pre>
               However, since cdf sums the area from 0 to our value, we notice this gives us the area that would not be shaded, so you must subtract the value by one.
               <pre><code>print(1-chi2.cdf(23.6, 12))</code></pre>
-              This gives us our desired p-value that is consistent with the figure above, .02304
+              This should give us our desired p-value, consistent with the figure above: <kbd>.02304</kbd> .
             </p>
 
             <h5 id="item-3-3">Interpreting P-value</h5>
             <p>
-              With each test, your script will calculate a <strong>p-value</strong>. We will compare this p-value against our significance level (which is .05). 
+              With each test, your script will calculate a <strong>p-value</strong>. We will compare this p-value against our significance level (which is .05).
               The comparison will then tell us what to do with our set of hypotheses for each metric.
             </p>
             <p>
@@ -526,33 +544,33 @@ from scipy.stats import t as t_dist</code></pre>
               Therefore, your results are <strong>statistically insignificant</strong>, meaning that there is a doubt as to whether the alternative hypothesis will repeat itself in other trials or situations.
             </p>
             <p>
-              Yes, stats is wordy, but it is important that we see you interpreting the results in your submission of the assignment. To someone who doesn't study stats, the numbers mean nothing. 
-              So when making your conculsions with your p-value, 
+              Yes, stats is wordy, but it is important that we see you interpreting the results in your submission of the assignment. To someone who doesn't study stats, the numbers mean nothing.
+              So when making your conculsions with your p-value,
               you must contextualize the cookie cutter responses above with your metric you were testing so that anyone could understans your results.
             </p>
 
 
             <h4 id="item-4">Performing the T-tests</h4>
               <p>
-                Below will explain the mathematics to perform a two sample t-test for the difference of means. Your task is to take the math and turn it into code so that, 
+                Below will explain the mathematics to perform a two sample t-test for the difference of means. Your task is to take the math and turn it into code so that,
                 for any dataset given as lists, you can easily get a p-value. However, it is still your job to intepret the p-value. The number alone is not enough.
               </p>
 
             <h5 id="item-4-1">Mean and STD</h5>
             <p>
-              To begin t-test, we need the average and standard deviation of both samples. 
+              To begin t-test, we need the average and standard deviation of both samples.
               <br/>
               The mathematics for the average is trivial.
               <br/>
               For standard deviation:
               <img class="img-fluid" src="assets/std.gif"/>
               <br/>
-              where i is an element in the list, avg is the average of all elements in the list, 
+              where i is an element in the list, avg is the average of all elements in the list,
               and n is the number of elements in the list.
               <br/>
               Make 2 helper functions, (that calculate average and standard deviation respectively), and implement them:
-              <pre><code>def get_avg(l)
-def get_std(l)</code></pre>
+              <pre><code>def get_avg(list)
+def get_stdev(list)</code></pre>
             </p>
 
             <h5 id="item-4-2">Combined STD</h5>
@@ -561,10 +579,10 @@ def get_std(l)</code></pre>
 
               <img class="img-fluid"src="assets/se.gif"/>
               <br/>
-              where std_a is the standadrd deviation of a, std_b is the standadrd deviation of b, 
-              n_a is the number of elements in a, and n_b is the number of elements in b.  
+              where std_a is the standard deviation of a, std_b is the standard deviation of b,
+              n_a is the number of elements in a, and n_b is the number of elements in b.
               <br/>
-              Once again, create a helper function <pre><code>def get_se(a, b)</code></pre> that implements the equation above math with lists a and b.
+              Once again, create a helper function <pre><code>def get_standard_error(a, b)</code></pre> that implements the equation above math with lists a and b.
             </p>
 
             <h5 id="item-4-3">df Calculation for Two Samples </h5>
@@ -573,11 +591,11 @@ def get_std(l)</code></pre>
 
               <img class="img-fluid" src="assets/df.png"/>
               <br/>
-              where se is the combined standard devaition, std_a is the standadrd deviation of a, std_b is the standadrd deviation of b, 
-              n_a is the number of elements in a, n_b is the number of elements in b, 
+              where se is the combined standard deviation, std_a is the standard deviation of a, std_b is the standard deviation of b,
+              n_a is the number of elements in a, n_b is the number of elements in b,
               and round(x) rounds x to the nearest integer.
               <br/>
-              Once again, create a helper function <pre><code>def get_2_sample_df(a, b)</code></pre> that 
+              Once again, create a helper function <pre><code>def get_2_sample_df(a, b)</code></pre> that
               implements the math above with lists a and b.
             </p>
 
@@ -586,15 +604,15 @@ def get_std(l)</code></pre>
               Now we can calculate our t-score.
 
               <img class="img-fluid" src="assets/t-score.gif"/>
-              where se is the combined standard error, avg(l) is the average of the values in the list.
+              where se is the combined standard error, avg(list) is the average of the values in the list.
               <br/>
-              Once again, create a helper function <pre><code>def t_score(a, b)</code></pre> that 
+              Once again, create a helper function <pre><code>def t_score(a, b)</code></pre> that
               implements the math above with lists a and b.
             </p>
             <p>
-              Lastly, implement a function that takes in two lists holding the data for sample A 
-              and sample B and produces the p-value. We expect you to call the helper functions and 
-              use the t-dist.cdf method imported <a href="#item-3-1">above</a>.
+              Lastly, implement a function that takes in two lists holding the data for sample A
+              and sample B and produces the p-value. We expect you to call the helper functions and
+              use the <samp>t_dist.cdf()</samp> method imported <a href="#item-3-1">above</a>.
               <strong>The name of this function must be the same for autograding purposes</strong>.
               <pre><code>def perform_2_sample_t_test(a, b)</code></pre>
             </p>
@@ -626,13 +644,13 @@ def get_std(l)</code></pre>
               Above is the grid of counts.
               Below is the formula applied.
               <img class="img-fluid" src="assets/exp-count-ex.png"/>
-              In our case, instead of men and women, we will have A and B. Also, instead of cat and dog, our metric will be there. 
+              In our case, instead of men and women, we will have A and B. Also, instead of cat and dog, our metric will be there.
               <br/>
               Keep in mind that the grid isn't always square. We can have multiple categories for both A and B.
             </p>
 
             <p>
-              Implement a helper function that consumes the grid of observed counts and returns a new grid holding the expected counts. <strong>Do not modify the parameter, count_grid.</strong>
+              Implement a helper function that consumes the grid of observed counts and returns a new grid holding the expected counts. <strong>Do not modify the parameter, observed_grid.</strong>
               <pre><code>def get_expected_grid(observed_grid)</code></pre>
             </p>
 
@@ -650,9 +668,9 @@ def calculate_expected(row_sum, col_sum, tot_sum)</code></pre>
             </p>
             <p>
               df = (rows − 1) × (columns − 1)
-              <br/>
+              <br><br>
               Therefore, for a 2by2, df = (1)(1) = 1
-              <br/>
+              <br>
               For a 2by4, df = (1)(3) = 3
             </p>
             <p>
@@ -666,16 +684,16 @@ def calculate_expected(row_sum, col_sum, tot_sum)</code></pre>
               <img class="img-fluid" src="assets/chi2.gif"/>
               The fancy X^2 stands for Chi^2.
               <br/>
-              You must apply the formula to each element in the grid. Luckily we now have two corresponding grids, 
+              You must apply the formula to each element in the grid. Luckily we now have two corresponding grids,
               one with the observed counts and the other (created by the helper function above), with the expected counts.
             </p>
             <p>
               Once again, create a helper function that consumes the grid of observed counts and calculates the chi^2 value.
-              <pre><code>def chi2_value(observed_grid)</code></pre> 
+              <pre><code>def chi2_value(observed_grid)</code></pre>
             </p>
             <p>
-              Lastly, implement a function that takes in the grid of observed counts and produces a p-value following 
-              the methods of the chi^2 test for homogeneity. Call your helpers and use the chi2.cdf function 
+              Lastly, implement a function that takes in the grid of observed counts and produces a p-value following
+              the methods of the chi^2 test for homogeneity. Call your helpers and use the <samp>chi2.cdf()</samp> function
               imported <a href="#item-3-2">above</a>.
               <strong>The name of this function must be the same for autograding purposes</strong>.
               <pre><code>def perform_chi2_homogeneity_test(observed_grid)</code></pre>
