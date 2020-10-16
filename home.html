@@ -536,11 +536,11 @@ from scipy.stats import t as t_dist</code></pre>
               The comparison will then tell us what to do with our set of hypotheses for each metric.
             </p>
             <p>
-              If your <strong>p-value &lt; singificance level (.05) </strong>, then you can reject the null.
+              If your <strong>p-value &lt; significance level (.05) </strong>, then you can reject the null.
               Therefore, your results are <strong>statistically significant</strong>, meaning that there is a high chance the alternative hypothesis will repeat itself in other trials or situations.
             </p>
             <p>
-              If your <strong>p-value &gt; singificance level (.05) </strong>, then you fail to reject the null.
+              If your <strong>p-value &gt; significance level (.05) </strong>, then you fail to reject the null.
               Therefore, your results are <strong>statistically insignificant</strong>, meaning that there is a doubt as to whether the alternative hypothesis will repeat itself in other trials or situations.
             </p>
             <p>
@@ -569,29 +569,34 @@ from scipy.stats import t as t_dist</code></pre>
               and n is the number of elements in the list.
               <br/>
               Make 2 helper functions, (that calculate average and standard deviation respectively), and implement them:
-              <pre><code>def get_avg(list)
-def get_stdev(list)</code></pre>
+              <pre><code>def get_avg(nums)
+def get_stdev(nums)</code></pre>
             </p>
 
-            <h5 id="item-4-2">Combined STD</h5>
+            <h5 id="item-4-2">Standard Error</h5>
             <p>
-              Next, we need to calculate the combined standard deviation.
+              Next, we need to calculate the standard error.
 
               <img class="img-fluid"src="assets/se.gif"/>
               <br/>
               where std_a is the standard deviation of a, std_b is the standard deviation of b,
               n_a is the number of elements in a, and n_b is the number of elements in b.
               <br/>
-              Once again, create a helper function <pre><code>def get_standard_error(a, b)</code></pre> that implements the equation above math with lists a and b.
+              As seen in the formula above, you'll need to calculate standard deviation as part of caclulating
+              standard error. 
+              
+              First, create a helper function <pre><code>def get_stdev(nums)</code></pre> to calculate 
+              <a href="https://www.thoughtco.com/thmb/GVy7U2pn2FP2Tut4MG53ZiCgOCQ=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/calculate-a-sample-standard-deviation-3126345-v4-CS-01-5b76f58f46e0fb0050bb4ab2.png">standard deviation</a> for a list of numbers.  
+              Then create a function <pre><code>def get_standard_error(a, b)</code></pre> to compute standard error for lists a and b.
             </p>
 
-            <h5 id="item-4-3">df Calculation for Two Samples </h5>
+            <h5 id="item-4-3"><em>df</em> Calculation for Two Samples </h5>
             <p>
               Then, we need the combined degrees of freedom between our two samples.
 
               <img class="img-fluid" src="assets/df.png"/>
               <br/>
-              where se is the combined standard deviation, std_a is the standard deviation of a, std_b is the standard deviation of b,
+              where se is the standard error, std_a is the standard deviation of a, std_b is the standard deviation of b,
               n_a is the number of elements in a, n_b is the number of elements in b,
               and round(x) rounds x to the nearest integer.
               <br/>
